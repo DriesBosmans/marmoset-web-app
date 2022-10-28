@@ -26,12 +26,12 @@
       type: 'saveFile',
       suggestedName: 'marmoset-' + Date.now() + '.png'
     };
-    chrome.fileSystem.chooseEntry(config, function (writableEntry) {
-      var blob = dataURItoBlob(renderer.domElement.toDataURL('png'));
-      writableEntry.createWriter(function (writer) {
-        writer.write(blob);
-      });
-    });
+    var download = document.createElement("a");
+    download.setAttribute("download", config.suggestedName);
+    var blob = dataURItoBlob(renderer.domElement.toDataURL('png'));
+    var url = URL.createObjectURL(blob);
+    download.href = url;
+    download.click();
   }
   
   var saveButton = document.querySelector('#saveButton');
